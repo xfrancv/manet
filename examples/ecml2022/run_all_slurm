@@ -1,0 +1,9 @@
+# Run all experiments on cluter using SLURM job scheduling
+
+sbatch -n15 train_hmc.slurm
+sbatch -n15 train_sudoku.slurm
+sbatch -n15 train_visual_sudoku.slurm
+
+sbatch -n165 eval_hmc.slurm
+sbatch -n175 eval_sudoku.slurm
+sbatch -n175 eval_visual_sudoku.slurm

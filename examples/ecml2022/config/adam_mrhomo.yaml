@@ -1,0 +1,12 @@
+num_epochs: 5000
+lr_const: 0.01
+lr_exp: -1
+beta1: 0.9
+beta2: 0.999
+epsilon: 0.00000001
+eval_obj: 1
+solver: "adam"
+model: "MrMaNetHomo"
+annotation: "homo"
+lambda: [0]
+n_examples: [10,100,inf]

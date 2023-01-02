@@ -1,0 +1,11 @@
+*.c
+*.o
+*.so
+*.pkl
+manet/__pycache__/
+manet/adag_solver/__pycache__/
+.ipynb_checkpoints/
+.vscode/
+__pycache__/
+src/__pycache__/
+
