@@ -12,7 +12,7 @@ pwd; hostname; date
 ml tqdm/4.61.2-GCCcore-10.3.0
 ml Anaconda3
 
-export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/home/xfrancv/Work/pymaxsum/manet/adag_solver"
+#export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/home/xfrancv/Work/pymaxsum/manet/adag_solver"
 
 python3 eval.py adam_advhomo hmc_30x30x100_mis0 1000 $SLURM_ARRAY_TASK_ID
 python3 eval.py adam_mrhomo hmc_30x30x100_mis0 1000 $SLURM_ARRAY_TASK_ID
