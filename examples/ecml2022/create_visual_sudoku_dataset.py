@@ -22,9 +22,9 @@ if __name__ == "__main__":
 
         # load mnist
         mnist = fetch_openml('mnist_784')
-        X = mnist.data.transpose()
+        X = mnist.data.transpose().to_numpy()
         X = X/np.linalg.norm(X,axis=0) # normalization
-        Y = mnist.target.astype(int)
+        Y = mnist.target.astype(int).to_numpy()
 
         hist = np.histogram( Y, bins=[0,1,2,3,4,5,6,7,8,9,10] )
         num_mnist_digits_per_class = hist[0]
