@@ -10,6 +10,19 @@ class M3N:
     def __init__( self, config ):
         self.config = config
 
+        if "verb" not in config.keys():
+            self.config["verb"] = False
+
+        if "annotation" not in config.keys():
+            self.config["annotation"] = "homo"
+
+        if config["solver"] == "adam":
+            if "beta1" not in config.keys():
+                self.config["beta1"] = 0.9
+                self.config["beta2"] = 0.999
+            if "epsilon" not in config.keys():
+                self.config["epsilon"] = 0.00000001
+
     def train( self, examples, lam):
         """
         Learn M3N classifier on examples.
@@ -51,13 +64,17 @@ class M3N:
         ## call solver
         if self.config["solver"] == "sgd":
             W, obj_val = m3n_sgd( examples, lam, num_epochs=self.config["num_epochs"], \
-                lr=(self.config["lr_const"],self.config["lr_exp"]), eval_obj = self.config["eval_obj"])
+                lr=(self.config["lr_const"],self.config["lr_exp"]), \
+                eval_obj = self.config["eval_obj"],\
+                verb=self.config["verb"])
 
         elif self.config["solver"] == "adam":
             W, obj_val = m3n_adam( examples, lam, num_epochs=self.config["num_epochs"], \
                 lr = (self.config["lr_const"],self.config["lr_exp"]), \
                 beta1=self.config["beta1"], beta2=self.config["beta2"], \
-                epsilon=self.config["epsilon"] )
+                epsilon=self.config["epsilon"], \
+                eval_obj = self.config["eval_obj"],\
+                verb=self.config["verb"])
 
         return W, obj_val 
         
@@ -91,6 +108,35 @@ class M3N:
 
         return loss_hamming, loss_01
 
+    def predict( self, W, examples ):
+
+        if type(examples) != list:
+            examples = [examples]
+            single_input = True
+        else:
+            single_input = False
+
+        predictions = []
+        scores = []
+        for i in range( len( examples)):
+            Q = examples[i].get_unary_scores( W )
+            G = examples[i].get_pair_scores( W )
+        
+            if examples[i].graph == 'chain':
+                Y_pred, energy = viterbi( Q, G )
+            else:
+                Y_pred, energy = adag( Q, G, examples[i].E )
+
+            predictions.append( Y_pred )
+            scores.append( energy )
+
+        if single_input:
+            return predictions[0], scores[0]
+        else:
+            return predictions, scores
+
+
+
 
 
 def one_hot(n_x, X):
@@ -100,7 +146,7 @@ def one_hot(n_x, X):
     return X_one_hot 
 
 ###############################################################################
-def m3n_sgd( examples, lam, num_epochs, lr, eval_obj = 1  ):
+def m3n_sgd( examples, lam, num_epochs, lr, eval_obj = 1 , verb=False ):
     """
     SGD solver for Markov Network training with LP relaxed loss.
     """
@@ -127,14 +173,16 @@ def m3n_sgd( examples, lam, num_epochs, lr, eval_obj = 1  ):
             examples[i].alpha12 = examples[i].alpha12 - _lr*examples[i].grad_alpha12
             examples[i].alpha21 = examples[i].alpha21 - _lr*examples[i].grad_alpha21
             
-        if epoch == num_epochs-1 or (eval_obj > 0 and ((epoch+1) % eval_obj) == 0 ):
+        if epoch == num_epochs-1 or (eval_obj > 0 and (epoch % eval_obj) == 0 ):
             obj_val = eval_objective( examples, W )
             obj_hist.append( obj_val )
+            if verb:
+                print(f"epoch={epoch} obj_val={obj_val}")
 
     return W, obj_hist
 
 ###############################################################################
-def m3n_adam( examples, lam, num_epochs, lr, beta1, beta2, epsilon, eval_obj = 1  ):
+def m3n_adam( examples, lam, num_epochs, lr, beta1, beta2, epsilon, eval_obj = 1 , verb=False ):
     """
     ADAM solver for Markov Network training with LP relaxed loss.
     """
@@ -178,9 +226,11 @@ def m3n_adam( examples, lam, num_epochs, lr, beta1, beta2, epsilon, eval_obj = 1
             examples[i].alpha21 -= _lr * (examples[i].mAlpha21/(1-pbeta1))/( np.sqrt(examples[i].vAlpha21/(1-pbeta2)) + epsilon ) 
             
         # objective is evaluated at the end or according to eval_obj period
-        if epoch == num_epochs-1 or (eval_obj > 0 and ((epoch+1) % eval_obj) == 0 ):
+        if epoch == num_epochs-1 or (eval_obj > 0 and (epoch % eval_obj) == 0 ):
             obj_val = eval_objective( examples, W )
             obj_hist.append( obj_val )
+            if verb:
+                print(f"epoch={epoch} obj_val={obj_val}")
 
     return W, obj_hist
 
