@@ -2,16 +2,25 @@ import numpy as np
 
 class HMC:
     def __init__( self, p0, transition, emission, alphabet=np.uint16 ):
+        """Hidden Markov Chain desribes a distribution over sequences
+        of observable and hidden discrete states. The observable states 
+        are non-negative integeres from 0 to n_x-1. The hidden states are
+        non-negative integers from 0 to n_y-1.
+
+        Args:
+            p0 (1d nparray): prob. distr. of 0th state
+            transition (2d nparray): transition[y,yy] = P(y(t)=yy|y(t-1)=y)
+            emission (2d nparray): emission[y,x] = P(x(t)=x|y(t)=y)
+            alphabet (dtype): dtype used to represent latent states
+        """
         self.n_y = emission.shape[0]
         self.n_x = emission.shape[1]
         self.transition = transition
         self.emission = emission
         self.p0 = p0
         self.alphabet = alphabet
-        
-        
-    def generate( self, length ):
-        
+                
+    def generate( self, length ):    
         X = np.zeros(length,dtype = self.alphabet)
         Y = np.zeros(length,dtype = self.alphabet)
         
@@ -22,7 +31,6 @@ class HMC:
             X[t] = np.random.choice( self.n_x,1, p=self.emission[Y[t],:])
         
         return X, Y
-    
     
     def map( self, X ):
         
