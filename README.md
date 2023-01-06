@@ -8,7 +8,7 @@
 
 Install required python packages:
 ```bash
-pip install numpy pyyaml pandas argparse tqdm cffi scipy
+pip install numpy pyyaml pandas argparse tqdm cffi scipy scikit-learn matplotlib
 ```
 Compile CFFI interface for C-implementation of the ADAG max-sum solver:
 ```bash
