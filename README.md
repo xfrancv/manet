@@ -40,9 +40,10 @@ PYTHONPATH="${PYTHONPATH}:MANET_ROOT_DIR/"
 
 - [Learning to predict sequences](examples/train_hmc.ipynb). This is an example on learning MN classifier predicting label sequences from synthetic examples generated from HMC. It shows how to learn from both completely annotated examples and examples with missing labels. It illustrates all basic functions of the library.
 
+- [MAP inference](examples/map_inference.ipynb). This example shows how to solve MAP inference in Markov Networks. In case of generic neigborhood structure one can use ADAG solver, and in case of chains Viterbi algorithm.
+
 - [Evaluation of M3N algorithm using different proxy losses](examples/ecml2022/README.md). This is an implementation of experiments published in paper [2]. The goal is to evaluate performance of MN classifier learned by M3N algorithm with two different proxies: LP Margin-rescaling loss and MArkov Network Adversarial loss. The proxy losses are evaluated on synthetically generated sequences and on the problem of learning symbolic and visual Sudoku solver.
 
-- [Sudoku solver](examples/sudoku_solver.ipynb). This is an example on using the generic ADAC inference algorithm to implement Sudoku solver.
 
 
 ## Reference
