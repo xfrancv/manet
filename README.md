@@ -1,4 +1,4 @@
-# MANET: MArkov NETwork learning library
+# MANET: MArkov NETwork learning
 
 This package implements maximum-margin based algorithms for learning Markov Network classifiers from examples. The package supports linearly parameterized MN classifiers with arbitrarily complex pair-wise interactions between labels. The inference of the labels leads to solving
 
