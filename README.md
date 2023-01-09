@@ -36,6 +36,15 @@ LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:MANET_ROOT_DIR/manet/adag_solver/"
 PYTHONPATH="${PYTHONPATH}:MANET_ROOT_DIR/"
 ```
 
+## Getting started
+
+- [Learning to predict sequences](examples/train_hmc.ipynb). This is an example on learning MN classifier predicting label sequences from synthetic examples generated from HMC. It shows how to learn from both completely annotated examples and examples with missing labels. It illustrates all basic functions of the library.
+
+- [Evaluation of M3N algorithm using different proxy losses](examples/ecml2022/README.md). This is an implementation of experiments published in paper [2]. The goal is to evaluate performance of MN classifier learned by M3N algorithm with two different proxies: LP Margin-rescaling loss and MArkov Network Adversarial loss. The proxy losses are evaluated on synthetically generated sequences and on the problem of learning symbolic and visual Sudoku solver.
+
+- [Sudoku solver](examples/sudoku_solver.ipynb). This is an example on using the generic ADAC inference algorithm to implement Sudoku solver.
+
+
 ## Reference
 - [1] V.Franc, A.Yermakov. Learning Maximum Margin Markov Networks from examples with missing labels. ACML 2021. 
 - [2] V.Franc, D.Prusa, A.Yermakov. Consistent and Tractable Algorithm for Markov Network Learning. ECML PKDD 2022.
