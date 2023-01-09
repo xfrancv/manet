@@ -44,12 +44,13 @@ PYTHONPATH="${PYTHONPATH}:MANET_ROOT_DIR/"
 
 - [Evaluation of M3N algorithm using different proxy losses](examples/ecml2022/README.md). This is an implementation of experiments published in paper [2]. The goal is to evaluate performance of MN classifier learned by M3N algorithm with two different proxies: LP Margin-rescaling loss and MArkov Network Adversarial loss. The proxy losses are evaluated on synthetically generated sequences and on the problem of learning symbolic and visual Sudoku solver.
 
-
-
 ## Reference
 - [1] V.Franc, A.Yermakov. Learning Maximum Margin Markov Networks from examples with missing labels. ACML 2021. 
 - [2] V.Franc, D.Prusa, A.Yermakov. Consistent and Tractable Algorithm for Markov Network Learning. ECML PKDD 2022.
 - [3] T.Werner. A Linear Programming Approach to Max-sum Problem. A Review. PAMI 2007.
 - [4] T.Werner. [LP Relaxation Approach to MAP Inference in Markov Random Fields](https://cmp.felk.cvut.cz/~werner/software/maxsum/)
 
+## Acknowledgemnts
+
+In case you use the learning algorithms from MANET, please acknowledged [2].
 
