@@ -52,5 +52,5 @@ PYTHONPATH="${PYTHONPATH}:MANET_ROOT_DIR/"
 
 ## Acknowledgemnts
 
-In case you use the learning algorithms from MANET, please acknowledged [2].
+In case you use the learning algorithms from MANET, then please acknowledge [2].
 
